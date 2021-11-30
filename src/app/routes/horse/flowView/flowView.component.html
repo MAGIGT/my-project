@@ -1,0 +1,36 @@
+<div class="alain-default__content-title">
+  <h1>
+    木马流量视图
+  </h1>
+</div>
+  <nz-card [nzTitle]="'流量视图'">
+    <div echarts #Flow class="demo-chart" style="width: 100%;height: 300px;"></div>
+    <nz-select [(ngModel)]="FlowSelect" nzSize="small" (ngModelChange)="changeTime('flow')" class="FlowSelect">
+      <nz-option *ngFor="let option of FlowOptionsDate" [nzLabel]="option.name" [nzValue]="option.id">
+      </nz-option>
+    </nz-select>
+  </nz-card>
+<div nz-row nzGutter="16">
+  <div nz-col nzSpan="12">
+    <nz-card [nzTitle]="'恶意源端口'">
+      <div echarts #SrcPort class="demo-chart" style="width: 100%;height: 300px;"></div>
+      <nz-select [(ngModel)]="SrcPortTopSelect" nzSize="small" (ngModelChange)="changeTime('SrcPort')"
+                 class="TopSelect">
+        <nz-option *ngFor="let option of SrcPortTopOptions" [nzLabel]="option.name" [nzValue]="option.id">
+        </nz-option>
+      </nz-select>
+    </nz-card>
+  </div>
+  <div nz-col nzSpan="12">
+    <nz-card [nzTitle]="'恶意目的端口'">
+      <div echarts #DesPort class="demo-chart" style="width: 100%;height: 300px;"></div>
+      <nz-select [(ngModel)]="DesPortTopSelect" nzSize="small" (ngModelChange)="changeTime('DesIp')"
+                 class="TopSelect">
+        <nz-option *ngFor="let option of DesPortTopOptions" [nzLabel]="option.name" [nzValue]="option.id">
+        </nz-option>
+      </nz-select>
+    </nz-card>
+  </div>
+</div>
+
+

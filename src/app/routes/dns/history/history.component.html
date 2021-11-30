@@ -1,0 +1,86 @@
+<div class="alain-default__content-title">
+  <h1>
+    检测历史
+  </h1>
+</div>
+
+<div nz-row nzGutter="16" >
+  <div nz-col nzSpan="12">
+    <nz-card>
+      <div echarts #Line class="demo-chart"   style="width: 100%;height: 220px;"></div>
+    </nz-card>
+  </div>
+  <div nz-col nzSpan="12">
+    <nz-card>
+      <div echarts #domain class="demo-chart" style="width: 100%;height: 220px;"></div>
+    </nz-card>
+  </div>
+</div>
+
+
+<nz-card>
+  <nz-divider nzText="DNS最新一次检测详情"></nz-divider>
+  <button nz-button nzType="primary" (click)="open()" style="margin-bottom: 10px"><i nz-icon type="search"></i>{{ 'button.search' | translate }}</button>
+  <button nz-button  (click)="resetData()" style="margin-bottom: 10px">重置数据</button>
+  <nz-modal  [(nzVisible)]="visible" [nzTitle]="'搜索'" [nzFooter]="null" [nzWidth]="600" (nzOnCancel)="CancelAdd()">
+    <form nz-form  [formGroup]="validateForm">
+      <nz-form-item nz-row>
+        <nz-form-label [nzSpan]="4">源IP</nz-form-label>
+        <nz-form-control nz-col [nzSpan]="16" >
+          <input nz-input  formControlName="srcIplist">
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item nz-row>
+        <nz-form-label [nzSpan]="4">目的IP</nz-form-label>
+        <nz-form-control nz-col [nzSpan]="16">
+          <input formControlName="desIplist" nz-input/>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item  nz-row>
+        <nz-form-label [nzSpan]="4">IP所在城市</nz-form-label>
+        <nz-form-control nz-col [nzSpan]="16">
+          <input formControlName="citylist"  nz-input />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-row>
+        <nz-form-label [nzSpan]="4">域名</nz-form-label>
+        <nz-form-control nz-col [nzSpan]="16">
+          <input formControlName="domain"   nz-input />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+    <div style="height:1px;width:100%;border-top:1px solid #E5E5E5;margin-top: 5px"></div>
+    <div style="text-align: center;padding: 5px 0 10px 0;margin-top: 5px">
+      <button nz-button nzType="primary" (click)="search()">搜索</button>
+      <button nz-button [nzType]="'primary'"  class="mr-sm" (click)="initForm()">
+        <span>重置</span>
+      </button>
+    </div>
+  </nz-modal>
+  <nz-table  #filterTable [nzData]="listOfDisplayData" nzBordered  nzShowPagination nzShowSizeChanger [nzShowQuickJumper]="true" [nzTotal]="total"
+             nzFrontPagination="false"  [nzFooter]="'共'+total+'条数据'" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+             (nzPageIndexChange)="refreshStatus()" (nzPageSizeChange)="refreshStatus()">
+    <thead>
+    <tr>
+      <th>域名</th>
+      <th>解析IP</th>
+      <th>源IP</th>
+      <th>目的IP</th>
+      <th>IP所在城市</th>
+      <th style="max-width: 200px">时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of filterTable.data">
+      <td>{{data.domain}}</td>
+      <td>{{data.ip}}</td>
+      <td>{{data.srcIplist}}</td>
+      <td >{{data.desIplist}}</td>
+      <td>{{data.citylist}}</td>
+      <td>{{data.detectTime | date:"yyyy-MM-dd HH:mm:ss" }}</td>
+    </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
